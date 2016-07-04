@@ -1,9 +1,12 @@
 package com.fanrir.booklisting;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Eisdrachl on 03.07.2016.
  */
-public class Book {
+public class Book implements Parcelable {
 
     /** The author of the book */
     private String mAuthors;
@@ -22,6 +25,12 @@ public class Book {
         mTitle = title;
     }
 
+    private Book(Parcel in) {
+        mAuthors = in.readString();
+        mTitle = in.readString();
+    }
+
+
     /**
      * Get the author of the book.
      */
@@ -36,6 +45,24 @@ public class Book {
         return mTitle;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAuthors);
+        dest.writeString(mTitle);
+    }
 
+    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 }

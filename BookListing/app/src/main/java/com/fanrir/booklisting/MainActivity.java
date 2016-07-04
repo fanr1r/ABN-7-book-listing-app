@@ -3,7 +3,6 @@ package com.fanrir.booklisting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -11,12 +10,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    static final String BOOK_LIST_VALUES = "bookListValues";
 
     /** List that stores the books */
     private BookAdapter mBookAdapter;
 
     /** List that stores the books */
     private ListView mListView;
+
+    //create book list where books will be stored
+    ArrayList<Book> books = new ArrayList<>();
 
     /** The keyword entered for book search */
     private String mKeyword = "";
@@ -26,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //create book list where books will be stored
-        ArrayList<Book> books = new ArrayList<>();
-
         //create Adapter for book list
+        if (savedInstanceState != null) {
+            books = savedInstanceState.getParcelableArrayList(BOOK_LIST_VALUES);
+        }
+
         mBookAdapter = new BookAdapter(this, books);
 
         // Get a reference to the ListView, and attach this adapter to it.
@@ -60,5 +64,14 @@ public class MainActivity extends AppCompatActivity {
         for(Book book : result) {
             mBookAdapter.add(book);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the book list values
+        savedInstanceState.putParcelableArrayList(BOOK_LIST_VALUES, books);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 }
