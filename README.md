@@ -1,6 +1,6 @@
 # ABN-7-book-listing-app
 
-App within I created an app to guide a user around Kiel, the capital of Schleswig-Holstein. This project is part of the Android Basics Nanodegree by Udacity & Google.
+Created an app to list the published books on a given topic using the Google Books API. This project is part of the Android Basics Nanodegree by Udacity & Google.
 
 # Pre-requisites
 
